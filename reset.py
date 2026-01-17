@@ -1,3 +1,4 @@
+   #ce code est utiliser pour le Nettoyage de toutes les couches
 import psycopg2
 
 try:
@@ -9,7 +10,7 @@ try:
     )
     cur = conn.cursor()
 
-    # Nettoyage de toutes les couches
+ 
     print("Nettoyage en cours...")
     cur.execute("""
         DROP TABLE IF EXISTS gold_customer_segments CASCADE;
@@ -26,4 +27,5 @@ except Exception as e:
 finally:
     if conn:
         cur.close()
+
         conn.close()
