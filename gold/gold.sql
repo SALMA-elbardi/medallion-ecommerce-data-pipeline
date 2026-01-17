@@ -7,7 +7,7 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# TON SQL GOLD CORRIGÉ
+#  SQL GOLD 
 sql_gold = """
 -- 1. REVENUE KPIs (Utilise maintenant order_date au lieu de cleaned_at)
 DROP TABLE IF EXISTS gold_daily_revenue CASCADE;
@@ -58,7 +58,7 @@ SELECT
 cur.execute("DROP VIEW IF EXISTS dim_category CASCADE;")
 cur.execute("CREATE VIEW dim_category AS SELECT DISTINCT category FROM silver_transactions;")
 conn.commit()
-print("✅ Vue dim_category créée avec succès.")
+print(" Vue dim_category créée avec succès.")
 
 cur.execute(sql_gold)
 result = cur.fetchall()
@@ -69,4 +69,5 @@ for row in result:
     print(row)
 
 cur.close()
+
 conn.close()
