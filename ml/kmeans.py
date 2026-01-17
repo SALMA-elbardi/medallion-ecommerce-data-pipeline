@@ -16,22 +16,19 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# 1. LECTURE RFM COMPLET (AVEC customer_id)
+# 1. LECTURE RFM COMPLET 
 df_rfm = pd.read_sql("""
     SELECT customer_id, frequency, monetary_value, recency_days 
     FROM gold_customer_rfm
 """, conn)
 print(f" {len(df_rfm)} clients uniques chargés (BIG DATA)")
 
-# 2. KMEANS 3 clusters (features RFM)
+# 2. KMEANS 3 clusters 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df_rfm[['frequency', 'monetary_value', 'recency_days']])
 kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
 clusters = kmeans.fit_predict(X_scaled)
 
-
-
-# 3. Silhouette Score (Correction pour économiser la mémoire)
 # On utilise un échantillon de 2000 clients pour calculer le score
 if len(X_scaled) > 2000:
     sil_score = silhouette_score(X_scaled, clusters, sample_size=2000, random_state=42)
@@ -46,7 +43,7 @@ print(f" KMeans Silhouette Score : {sil_score:.3f}")
 df_rfm['cluster'] = clusters
 df_rfm['cluster_name'] = df_rfm['cluster'].map({0: 'VIP', 1: 'Growth', 2: 'Lost'})
 
-# 5. INSERT DIRECT SQL (FIX customer_id)
+# 5. INSERT DIRECT SQL
 cur.execute("DROP TABLE IF EXISTS gold_customer_segments;")
 cur.execute("""
     CREATE TABLE gold_customer_segments (
@@ -81,3 +78,4 @@ for name, count in cluster_stats.items():
 
 cur.close()
 conn.close()
+
