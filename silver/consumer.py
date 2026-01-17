@@ -1,4 +1,4 @@
-# silver/consumer.py - ETL Bronze → Silver BIG DATA (MODIFIÉ)
+#  ETL Bronze → Silver BIG DATA 
 import json
 import psycopg2
 from confluent_kafka import Consumer
@@ -16,7 +16,7 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# --- MODIFICATION 1 : AJOUT DE order_date DANS LE SCHÉMA ---
+
 cur.execute("""
 CREATE TABLE IF NOT EXISTS silver_transactions (
     order_id VARCHAR(50) PRIMARY KEY,
@@ -39,7 +39,7 @@ print(" Table silver_transactions prête avec colonne order_date")
 # Kafka Consumer
 c = Consumer({
     'bootstrap.servers': 'localhost:9092',
-    'group.id': 'silver_etl_group_v3',  # Nouveau groupe pour relire depuis le début
+    'group.id': 'silver_etl_group_v3',  
     'auto.offset.reset': 'earliest',
     'enable.auto.commit': False
 })
@@ -56,7 +56,7 @@ try:
             record = json.loads(msg.value())
             
             try:
-                # --- MODIFICATION 2 : EXTRACTION DE LA DATE ---
+               
                 cleaned = {
                     'order_id': str(record.get('order_id', 'UNKNOWN')).strip()[:50],
                     'customer_id': str(record.get('customer_id', 'UNKNOWN')).strip()[:50],
@@ -71,7 +71,7 @@ try:
                     'order_date': record.get('order_date') # <-- On récupère la date du JSON
                 }
                 
-                # --- MODIFICATION 3 : INSERTION AVEC order_date ---
+               
                 cur.execute("""
                     INSERT INTO silver_transactions 
                     (order_id, customer_id, category, price, discount, quantity, 
@@ -99,4 +99,5 @@ finally:
     conn.commit()
     c.close()
     cur.close()
+
     conn.close()
