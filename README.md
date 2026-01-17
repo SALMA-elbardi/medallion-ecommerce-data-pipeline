@@ -14,3 +14,15 @@ Ce projet implémente une plateforme de données de bout en bout, de l'ingestion
 - Architecture Medallion respectant les standards industriels.
 - Traitement de données massives .
 - Modèle ML intégré pour la personnalisation marketing.
+  
+  ##  Dashboards & Visualisation
+Voici les résultats finaux de l'analyse, connectés directement à la couche **Gold** de l'architecture Medallion.
+
+### 1. Performance des Ventes
+![Sales Dashboard](dashboards/Sales_Performance.png)
+
+### 2. Intelligence Client (Segmentation RFM)
+![Customer Dashboard](dashboards/Customer_Intelligence.png)
+
+### 3. Analyse des Produits
+![Product Dashboard](dashboards/Product_Analysis.png)
