@@ -9,6 +9,7 @@ Ce projet implémente une plateforme de données de bout en bout, de l'ingestion
 - **Analytique & IA (Gold)** : Calcul des KPIs métier et modèle de clustering **K-Means**.
 - **Orchestration** : **Docker Compose** pour une infrastructure isolée et reproductible.
 - **Visualisation** : **Power BI** (Dashboards de performance, segmentation, et analyse produits).
+  ![Architecture du Projet](architecture.png)
 
 ###  Points Clés
 - Architecture Medallion respectant les standards industriels.
