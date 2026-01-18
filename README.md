@@ -27,3 +27,6 @@ Voici les résultats finaux de l'analyse, connectés directement à la couche **
 
 ### 3. Analyse des Produits
 ![Product Dashboard](dashboards/Product_Analysis.png)
+##  Installation
+1. `docker-compose up -d`
+2. `pip install -r requirements.txt`
